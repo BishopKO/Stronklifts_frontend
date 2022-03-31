@@ -69,6 +69,9 @@ const TrainingsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  span{
+    margin-right: 10px;
+  }
 `;
 
 
@@ -85,17 +88,13 @@ const EditTraining = ({ data, onClick }) => {
         <AddNewButton>Add</AddNewButton>
       </TopBar>
       <TrainingsWrapper>
-
-        <div style={{
-          displat: "flex",
-          flexDirection: "column",
-        }}>Excercise:<input/>Series:<input/>Reps:<input/>Weight:<input/></div>
-
-
-        {data.map((item, index) => (
+        {data.map((plan, index) => (
           <TrainingButton onClick={() => handleEditWorkout(index)}>
             <p>Workout {index + 1} <i className="fa fa-gear"></i></p>
-            <p>Squat, Bench Press, Barbell Row</p>
+            <p>{plan.slice(0, 3).map((exc, index) => (
+              <span>{exc.exc} {index < 2 && ","}</span>
+            ))}
+            </p>
           </TrainingButton>
         ))}
       </TrainingsWrapper>

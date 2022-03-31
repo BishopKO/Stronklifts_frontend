@@ -25,7 +25,8 @@ const StyledInput = styled.input`
     background-color: transparent;
     font-size: 24px;  
      :focus{
-      outline: none;      
+      outline: none;    
+      background-color: transparent;  
     } 
 `;
 
@@ -35,12 +36,13 @@ const StyledLoginButton = styled.button`
   border: 2px solid ${colors.green};
   border-radius: 15px;
   color: ${colors.green};
+  font-size: 18px;
   font-weight: bold;
   background-color: white;
 `;
 
 const LoginView = () => {
-  const [loginDetails, setLoginDetails] = useState({ username: "bishop", password: "ghost14" });
+  const [loginDetails, setLoginDetails] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
 
   const handleLogin = () => {
@@ -72,6 +74,7 @@ const LoginView = () => {
       </div>
       <div>
         <StyledInput name="username"
+                     placeholder="username"
                      onChange={(element) => handleOnChange(element)}
                      value={loginDetails.username}
 
@@ -79,6 +82,8 @@ const LoginView = () => {
       </div>
       <div>
         <StyledInput name="password"
+                     type="password"
+                     placeholder="password"
                      onChange={(element) => handleOnChange(element)}
                      value={loginDetails.password}
         />

@@ -38,7 +38,7 @@ const WorkoutButton = ({ active, data, title, onClick }) => {
       <div style={{ padding: "2px" }}>
         <StyledButton onClick={() => onClick()} active={active}>
           <StyledTemplate>
-            <div style={{ color: "grey", marginTop: "15px", fontSize: "18px" }}>{title}</div>
+            <div style={{ color: "grey", marginTop: "15px", fontSize: "22px" }}>{title}</div>
             {
               data.slice(0, 3).map((item) => (
                 <StyledGridRow>

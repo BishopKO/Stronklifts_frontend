@@ -17,9 +17,10 @@ const StyledTemplate = styled.div`
     justify-items: center; 
   }
   
-  .Panel{
+  .Panel{    
     border-bottom: 1px solid red;
     padding: 5px;   
+    height: 100%
   }
   
   .WorkoutRowTop{
@@ -28,7 +29,7 @@ const StyledTemplate = styled.div`
     flex-direction: row;
     justify-content: space-between;
     padding: 5px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     
     #workout_name{

@@ -116,7 +116,7 @@ const MainView = () => {
       </TopBar>
       {trainingData.map((plan, index) => (
         <WorkoutButton data={plan}
-                       title={`Training ${index + 1}`}
+                       title={`Workout ${index + 1}`}
                        active={true}
                        onClick={() => setActiveTraining(index)}/>
       ))}

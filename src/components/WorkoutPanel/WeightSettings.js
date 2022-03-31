@@ -5,9 +5,9 @@ import colors from "../../themes/colors";
 const StyledTemplate = styled.div`  
   display: grid;
   grid-template-rows: 20% 30% 30% 20%;
-  position: absolute;
+  position: fixed;
   padding: 10px;
-  top: 30%;
+  top: 100px;
   left: 0;
   right:0;
   margin: auto;
@@ -15,7 +15,7 @@ const StyledTemplate = styled.div`
   border: 1px solid ${colors.red};
   border-radius: 10px;
   height: 300px;
-  width: 90%;
+  width: 95%;
   z-index: 200;
       
   #exc_weight_title{
