@@ -72,7 +72,8 @@ const Index = () => {
           {/*<button>Login</button>*/}
           <LoginButton active={view === "login_view"}
                        onClick={() => setView("login_view")}
-          >Login</LoginButton>
+          >Login
+          </LoginButton>
           <RegisterButton active={view === "register_view"}
                           onClick={() => setView("register_view")}
           >Register</RegisterButton>

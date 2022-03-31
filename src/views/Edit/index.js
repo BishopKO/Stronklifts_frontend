@@ -1,32 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import WorkoutPanel from "./WorkoutsPanel";
+import TopBar from "../../components/TopBar";
 import styled from "styled-components";
 
 const StyledTemplate = styled.div`
-  display: flex;
+  width: 100%;
+  display: flex;  
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
 `;
 
 const TrainingButton = styled.button`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 15px;
+  justify-content: space-between; 
   margin-top: 10px; 
   border: 0.5px solid rgba(255,0,0,0.71);
   border-radius: 5px;
   background-color: white;
-  width: 95%;  
+  width: 100%;  
   height: 100px;
+  padding: 10px;
+  color: rgba(0,0,0,0.7);
   p:nth-child(1){
     width:100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     font-size: 30px;
-    text-align: left;
-    padding: 0;
+    text-align: left;    
     margin: 0;   
     i{
       color:lightgrey;  
@@ -45,8 +47,7 @@ const AddNewButton = styled.button`
   border: 1px solid red;
   color:white; 
   background-color: red;  
-  height: 40px;
-  margin-right: 10px;
+  height: 40px;  
 `;
 
 const BackButton = styled.button`
@@ -57,59 +58,63 @@ const BackButton = styled.button`
   border: 1px solid red;
   color:red; 
   background-color: white;
-  margin-left: 10px;
 `;
 
-const TopBar = styled.div`  
-  position: fixed;
-  top:0;
-  width:100%;
-  display: flex;
-  flex-direction: row; 
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-  background-color: white;
-`;
 
 const TrainingsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: 80px;  
   span{
     margin-right: 10px;
   }
 `;
 
+const StyledContent = styled.div`
+  width:100%;
+  position: relative;  
+`;
+
 const EditTraining = ({ data, onClick }) => {
+  const [edit, setEdit] = useState(null);
 
   const handleEditWorkout = (index) => {
-    console.log(data[index]);
+    console.log(index);
+    setEdit(index);
   };
 
   return (
     <StyledTemplate>
-      <TopBar>
-        <BackButton onClick={onClick}>Back</BackButton>
-        <AddNewButton>Add</AddNewButton>
-      </TopBar>
-      {/*<TrainingsWrapper>*/}
-      {/*  {data.map((plan, index) => (*/}
-      {/*    <TrainingButton onClick={() => handleEditWorkout(index)}>*/}
-      {/*      <p>Workout {index + 1} <i className="fa fa-gear"></i></p>*/}
-      {/*      <p>{plan.slice(0, 3).map((exc, index) => (*/}
-      {/*        <span>{exc.exc} {index < 2 && ","}</span>*/}
-      {/*      ))}*/}
-      {/*      </p>*/}
-      {/*    </TrainingButton>*/}
-      {/*  ))}*/}
-      {/*</TrainingsWrapper>*/}
-
-      {/*TODO: Remove when done*/}
-      <WorkoutPanel data={data[0]}/>
+      {edit === null &&
+      <TrainingsWrapper>
+        <TopBar>
+          <BackButton onClick={onClick}>Back</BackButton>
+          <AddNewButton>Add</AddNewButton>
+        </TopBar>
+        <StyledContent>
+          {data.map((plan, index) => (
+            <TrainingButton onClick={() => handleEditWorkout(index)}>
+              <p>Workout {index + 1} <i className="fa fa-gear"></i></p>
+              <p>{plan.slice(0, 3).map((exc, index) => (
+                <span>{exc.exc} {index < 2 && ","}</span>
+              ))}
+              </p>
+            </TrainingButton>
+          ))}
+        </StyledContent>
+      </TrainingsWrapper>
+      }
+      {edit !== null &&
+      <div style={{ width: "100%" }}>
+        <TopBar>
+          <BackButton onClick={() => setEdit(null)}>Back</BackButton>
+        </TopBar>
+        <WorkoutPanel data={data[edit]}/>
+      </div>
+      }
     </StyledTemplate>
   );
-};
 
+};
 export default EditTraining;

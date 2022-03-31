@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import colors from "../themes/colors";
 import WorkoutPanel from "../components/WorkoutPanel/WorkoutPanel";
-import EditTraining from "../views/EditTraining";
+import EditTraining from "../views/Edit";
 
 const MainTemplate = styled.div`
   display: grid;
@@ -27,7 +27,7 @@ const TopBar = styled.div`
     flex-direction:column;
     align-items: center;    
     justify-content:center;  
-    height:100%;
+    height: 100%;
   }
 `;
 
@@ -105,7 +105,9 @@ const MainView = () => {
   return (
     <MainTemplate>
       <TopBar>
-        <div><LogoutButton onClick={handleLogout}>Logout</LogoutButton></div>
+        <div>
+          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        </div>
         <div style={{ fontSize: "26px", color: colors.red }}>STRONKLIFTS</div>
         <div>
           <EditButton onClick={handleEditTraining}>

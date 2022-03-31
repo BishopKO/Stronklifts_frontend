@@ -1,6 +1,5 @@
 body {
     overscroll-behavior: contain;
-    padding: 5px;
 }
 
 code {
@@ -13,5 +12,5 @@ html {
 }
 
 *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
 }

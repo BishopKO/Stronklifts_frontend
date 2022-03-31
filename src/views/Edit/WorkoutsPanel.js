@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import TopBar from "../../components/TopBar";
+import styled, { css } from "styled-components";
 
 const MainTemplate = styled.div`
-  width: 95%;
-  margin-top: 80px;
+  width: 100%;
+  margin-top: 80px; 
 `;
 
 const ExerciseButton = styled.button`
@@ -27,10 +28,10 @@ const ExerciseButton = styled.button`
 
 const SettingsPanel = styled.div`
   display: grid;
-  grid-template-rows: 1fr 20px;
+  grid-template-rows: 1fr 40px;
   padding:5px;
   width:100%;
-  height: 180px;
+  height: 200px;
   margin-top: 5px;
   background-color: white;
   border: 1px solid black;
@@ -52,22 +53,60 @@ const SettingsTop = styled.div`
 `;
 
 const SettingsBottom = styled.div`
-  display: flex;
+  display: flex; 
+  width: 100%;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 5px;
+  justify-content: space-between;
+  align-items: flex-end;  
 `;
 
 const SettingsRow = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  margin-top: 5px;
+  margin-top: 8px; 
+`;
+
+const StyledButton = styled.button`
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 3px; 
+  background-color: white;
+
+  i{
+    font-size: 22px;
+  }
+  ${({ red }) => red && css`
+    border: 1px solid red;
+    color: red;
+  `}
+  
+  ${({ green }) => green && css`
+    border: 1px solid green;
+    color: green;
+  `}
+`;
+
+const StyledInput = styled.input`
+  font-size: 18px;
+  border:none;
+  border-bottom: 1px solid black;
+`;
+
+const BackButton = styled.button`
+  font-size: 24px;
+  width: 100px;
+  height: 40px;
+  border-radius: 3px;
+  border: 1px solid red;
+  color:red; 
+  background-color: white;
+  margin-left: 10px;
 `;
 
 
 const WorkoutPanel = ({ data }) => {
-  const [showSettings, setShowSettings] = useState(0);
+  const [showSettings, setShowSettings] = useState(null);
 
   const handleShowSettings = (index) => {
     if (showSettings === false) {
@@ -83,14 +122,14 @@ const WorkoutPanel = ({ data }) => {
   return (
     <MainTemplate>
       {data.map((exercise, index) => (
-        <div>
+        <div style={{ width: "100%" }}>
           <ExerciseButton onClick={() => handleShowSettings(index)}>{exercise.exc}
             <i className="fa fa-sliders" aria-hidden="true"></i>
           </ExerciseButton>
           {showSettings === index &&
           <SettingsPanel>
             <SettingsTop>
-              <SettingsRow>Workout name: <input defaultValue={exercise.exc}/></SettingsRow>
+              <SettingsRow>Workout name: <StyledInput defaultValue={exercise.exc}/></SettingsRow>
               <SettingsRow>Series:
                 <select onChange={(element) => console.log(element.target.value)}>
                   <option value={1}>1</option>
@@ -100,16 +139,16 @@ const WorkoutPanel = ({ data }) => {
                   <option value={5}>5</option>
                 </select>
               </SettingsRow>
-              <SettingsRow>Reps:<input/>
+              <SettingsRow>Reps:<StyledInput/>
 
               </SettingsRow>
-              <SettingsRow>Weight: <input/></SettingsRow>
+              <SettingsRow>Weight (kg): <StyledInput/></SettingsRow>
             </SettingsTop>
             <SettingsBottom>
-
-              <button>Save</button>
-              <button>Delete</button>
-
+              <StyledButton red>
+                <i className="fa fa-trash" aria-hidden="true"></i>
+              </StyledButton>
+              <StyledButton green>Save</StyledButton>
             </SettingsBottom>
           </SettingsPanel>
           }

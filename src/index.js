@@ -10,9 +10,9 @@ import data from "../src/data/data";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/*<Root/>*/}
+    <Root/>
     {/*<History/>*/}
-    <EditTraining data={data}/>
+    {/*<EditTraining data={data}/>*/}
   </React.StrictMode>,
   document.getElementById("root"),
 );
