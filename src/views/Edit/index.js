@@ -1,30 +1,11 @@
 import React from "react";
+import WorkoutPanel from "./WorkoutsPanel";
 import styled from "styled-components";
 
 const StyledTemplate = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const BackButton = styled.button`
-  font-size: 24px;
-  width: 100px;
-  border-radius: 3px;
-  border: 1px solid red;
-  color:red; 
-  background-color: white;
-  margin-bottom: 50px;
-`;
-
-const AddNewButton = styled.button`
-  font-size: 24px;
-  width: 100px;
-  border-radius: 3px;
-  border: 1px solid red;
-  color:white; 
-  background-color: red;
-  margin-bottom: 50px;
 `;
 
 const TrainingButton = styled.button`
@@ -57,11 +38,38 @@ const TrainingButton = styled.button`
   }
 `;
 
-const TopBar = styled.div`
-  width:95%;
+const AddNewButton = styled.button`
+  font-size: 24px;
+  width: 100px;
+  border-radius: 3px;
+  border: 1px solid red;
+  color:white; 
+  background-color: red;  
+  height: 40px;
+  margin-right: 10px;
+`;
+
+const BackButton = styled.button`
+  font-size: 24px;
+  width: 100px;
+  height: 40px;
+  border-radius: 3px;
+  border: 1px solid red;
+  color:red; 
+  background-color: white;
+  margin-left: 10px;
+`;
+
+const TopBar = styled.div`  
+  position: fixed;
+  top:0;
+  width:100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: row; 
   justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background-color: white;
 `;
 
 const TrainingsWrapper = styled.div`
@@ -73,20 +81,6 @@ const TrainingsWrapper = styled.div`
     margin-right: 10px;
   }
 `;
-
-const TmpEdit = ({ data }) => {
-  return (
-    <div style={{ width: "95%" }}>
-      {data.map(exercise => (
-        <div style={{ width: "100%" }}>
-          <button style={{ width: "100%", textAlign: "left", fontSize: "18px" }}>{exercise.exc}</button>
-        </div>
-      ))
-      }
-    </div>
-  );
-};
-
 
 const EditTraining = ({ data, onClick }) => {
 
@@ -100,20 +94,20 @@ const EditTraining = ({ data, onClick }) => {
         <BackButton onClick={onClick}>Back</BackButton>
         <AddNewButton>Add</AddNewButton>
       </TopBar>
-      <TrainingsWrapper>
-        {data.map((plan, index) => (
-          <TrainingButton onClick={() => handleEditWorkout(index)}>
-            <p>Workout {index + 1} <i className="fa fa-gear"></i></p>
-            <p>{plan.slice(0, 3).map((exc, index) => (
-              <span>{exc.exc} {index < 2 && ","}</span>
-            ))}
-            </p>
-          </TrainingButton>
-        ))}
-      </TrainingsWrapper>
+      {/*<TrainingsWrapper>*/}
+      {/*  {data.map((plan, index) => (*/}
+      {/*    <TrainingButton onClick={() => handleEditWorkout(index)}>*/}
+      {/*      <p>Workout {index + 1} <i className="fa fa-gear"></i></p>*/}
+      {/*      <p>{plan.slice(0, 3).map((exc, index) => (*/}
+      {/*        <span>{exc.exc} {index < 2 && ","}</span>*/}
+      {/*      ))}*/}
+      {/*      </p>*/}
+      {/*    </TrainingButton>*/}
+      {/*  ))}*/}
+      {/*</TrainingsWrapper>*/}
 
       {/*TODO: Remove when done*/}
-      <TmpEdit data={data[0]}/>
+      <WorkoutPanel data={data[0]}/>
     </StyledTemplate>
   );
 };

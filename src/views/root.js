@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MainView from "../views/Main";
 import jwt_decode from "jwt-decode";
-import Login from "../../src/views/Login/MainView";
+import Login from "./Login";
 
 const jwt_expiry_check = (token) => {
   if (token === null) {

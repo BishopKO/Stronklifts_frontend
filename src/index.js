@@ -2,16 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import Root from "./views/root";
+import History from "./views/History";
+import EditTraining from "../src/views/Edit";
 import "../src/index.css";
-
 import data from "../src/data/data";
 
-import EditTraining from "../src/views/EditTraining";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root/>
-    {/*<EditTraining data={data}/>*/}
+    {/*<Root/>*/}
+    {/*<History/>*/}
+    <EditTraining data={data}/>
   </React.StrictMode>,
   document.getElementById("root"),
 );

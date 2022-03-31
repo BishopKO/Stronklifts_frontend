@@ -61,7 +61,7 @@ const StyledTitle = styled.p`
  color: red;
 `;
 
-const MainView = () => {
+const Index = () => {
   const [view, setView] = useState("login_view");
 
   return (
@@ -86,4 +86,4 @@ const MainView = () => {
 
 };
 
-export default MainView;
+export default Index;
