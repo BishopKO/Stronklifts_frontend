@@ -95,6 +95,7 @@ const WorkoutPanel = ({ data, handleSave }) => {
     if (timer > 0) {
       setTimer(0);
     } else {
+      clearInterval(interval.current);
       handleTimer();
     }
   };

@@ -1,9 +1,8 @@
 body {
+    display: flex;
+    flex-direction: column;
     overscroll-behavior: contain;
-}
-
-code {
-
+    align-items: center;
 }
 
 html {
@@ -13,4 +12,9 @@ html {
 
 *, *:before, *:after {
     box-sizing: border-box;
+}
+
+#root {
+    width: 100%;
+    max-width: 500px;
 }

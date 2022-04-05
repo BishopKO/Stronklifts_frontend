@@ -5,15 +5,17 @@ import colors from "../../themes/colors";
 const StyledButton = styled.button`;
   height: 100%;
   width: 100%;
-  background-color: ${colors.white}; 
-  border: 1.5px solid ${colors.grey};    
+  background-color: ${colors.white};  
+  border: 2px solid rgba(36,128,36,0.73);  
   outline: none;    
   font-size: 2.5vh;   
   border-radius:5px;
   color: ${colors.darkBlue};
+  opacity: 0.4;
   
   ${({ active }) => active && css`
-      border: 1.5px solid ${colors.red}; 
+      border: 2px solid ${colors.red};   
+      opacity: 1;
 `}
 `;
 
@@ -41,7 +43,7 @@ const WorkoutButton = ({ active, data, title, onClick }) => {
             <div style={{ color: "grey", marginTop: "15px", fontSize: "22px" }}>{title}</div>
             {
               data.slice(0, 3).map((item) => (
-                <StyledGridRow>
+                <StyledGridRow key={JSON.stringify(item)}>
                   <div>{item.exc}</div>
                   <div>{item.ser}x{item.reps} {item.weight} {item.unit}</div>
                 </StyledGridRow>

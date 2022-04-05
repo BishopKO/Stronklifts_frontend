@@ -5,21 +5,20 @@ import styled from "styled-components";
 import colors from "../themes/colors";
 import WorkoutPanel from "../components/WorkoutPanel/WorkoutPanel";
 import EditTraining from "../views/Edit";
+import StyledButton from "../components/Atoms/StyledButton";
+
 
 const MainTemplate = styled.div`
-  display: grid;
-  box-sizing: border-box;  
-  width: 100%;
+  display: grid;   
   height: 100vh;
-  grid-template-rows: 7% 30% 30% 30%;
+  grid-template-rows: 80px 1fr 1fr 1fr;
 `;
 
 const TopBar = styled.div`
   display: grid;
   grid-template-columns: 20% 60% 20%;  
   width: 100%;
-  height: 95%; 
-  padding: 3px;
+  height: 100%; 
   border: none;   
   
   div{
@@ -31,42 +30,19 @@ const TopBar = styled.div`
   }
 `;
 
-const EditButton = styled.button`
-  outline: none;  
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid ${colors.red};
-  border-radius:5px;
-  font-weight: bold;
-  background-color: transparent;  
-  padding:0;
-  margin:0;
-  font-size:18px;
-  color: ${colors.red};   
-`;
-
-const LogoutButton = styled.button`
- outline: none;  
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid ${colors.red};
-  background-color: ${colors.red};
-  border-radius:5px;
-  padding:0;
-  margin:0;
-  font-size:18px;
-  color: white;
-`;
 
 const MainView = () => {
-  const [trainingData, setTrainingData] = useState(null);
+  const [trainingData, setTrainingData] = useState([]);
   const [activeTraining, setActiveTraining] = useState(-1);
+  const [activeWorkout, setActiveWorkout] = useState(null);
+
 
   useEffect(() => {
     const access_token = localStorage.getItem("access");
     const headers = { Authorization: `Bearer ${access_token}` };
     axios.get(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/get_training_data`, { headers: headers }).then(resp => {
       setTrainingData(JSON.parse(resp.data.data));
+      setActiveWorkout(JSON.parse(resp.data.active_plan));
     });
   }, []);
 
@@ -93,11 +69,6 @@ const MainView = () => {
     return (<EditTraining onClick={() => setActiveTraining(-1)} data={trainingData}/>);
   }
 
-  if (trainingData === null) {
-    console.log("error");
-    return (<div>No training data:(</div>);
-  }
-
   if (activeTraining !== -1) {
     return (<WorkoutPanel data={trainingData[activeTraining]} handleSave={handleSaveTrainingData}/>);
   }
@@ -106,20 +77,21 @@ const MainView = () => {
     <MainTemplate>
       <TopBar>
         <div>
-          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+          <StyledButton red onClick={handleLogout}>Logout</StyledButton>
         </div>
         <div style={{ fontSize: "26px", color: colors.red }}>STRONKLIFTS</div>
         <div>
-          <EditButton onClick={handleEditTraining}>
-            Edit
-          </EditButton>
+          <StyledButton clear onClick={handleEditTraining}>
+            <i className="fa fa-bars" aria-hidden="true"></i>
+          </StyledButton>
 
         </div>
       </TopBar>
-      {trainingData.map((plan, index) => (
-        <WorkoutButton data={plan}
+      {trainingData.map((workout, index) => (
+        <WorkoutButton key={JSON.stringify(workout)}
+                       data={workout}
                        title={`Workout ${index + 1}`}
-                       active={true}
+                       active={activeWorkout === index}
                        onClick={() => setActiveTraining(index)}/>
       ))}
     </MainTemplate>

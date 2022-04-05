@@ -8,13 +8,8 @@ const StyledTemplate = styled.div`
   grid-template-rows: 10% 1fr;  
   border: 2px solid rgba(124,119,120,0.55);
   border-radius: 10px;
-  top: 20%;
-  position: absolute;  
-  left: 0;
-  right:0;
-  margin: auto;    
-  height: 300px;
-  width: 90%;
+  top: 20%;  
+  height: 300px; 
   background-color: white;
   overflow: hidden;
   

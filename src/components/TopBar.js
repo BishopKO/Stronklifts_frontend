@@ -12,6 +12,7 @@ const TopBar = styled.div`
   align-items: center;
   height: 80px;
   overflow: hidden;
+  background-color: white;
 `;
 
 export default TopBar;
