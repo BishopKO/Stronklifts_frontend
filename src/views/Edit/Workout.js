@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useReducer, useRef, useCallback } from "react";
-import { connect } from "react-redux";
-import styled, { css } from "styled-components";
-import StyledButton from "../../components/Atoms/StyledButton";
-import WorkoutButton from "./WourkoutButton";
-import TopBar from "../../components/TopBar";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import styled, { css } from 'styled-components';
+import StyledButton from '../../components/Atoms/StyledButton';
+import WorkoutButton from './WourkoutButton';
+import TopBar from '../../components/Atoms/TopBar';
 
 const MainTemplate = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 80px; 
+  margin-top: 80px;
 `;
 
-const WorkoutPanel = ({ state, activeWorkout, data, goBack }) => {
+const WorkoutPanel = ({ addExercise, state, activeWorkout, data, goBack }) => {
   const [workoutData, setWorkoutData] = useState(data);
   const [showSettings, setShowSettings] = useState(null);
 
@@ -27,12 +28,7 @@ const WorkoutPanel = ({ state, activeWorkout, data, goBack }) => {
   };
 
   const handleAddNew = () => {
-    let tmpData = workoutData;
-    const empty = { exc: "", ser: 0, reps: 0, weight: 0, unit: "kg" };
-    // TODO: Rewrite to use redux (dispatch)
-    // tmpData.push(empty);
-    // setWorkoutData([...tmpData]);
-    // setShowSettings(workoutData.length - 1);
+    addExercise(activeWorkout);
   };
 
   const handleShowSettings = (index) => {
@@ -45,42 +41,62 @@ const WorkoutPanel = ({ state, activeWorkout, data, goBack }) => {
     setWorkoutData([...tmpData]);
   };
 
-
   if (state.length === 0) {
-    return (<div>Error... :(</div>);
+    return <div>Error... :(</div>;
   }
+
+  const handleSave = () => {
+    const access_token = localStorage.getItem('access');
+    const config = { headers: { Authorization: `Bearer ${access_token}` } };
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_ADDRESS}/api/save_training_data/`,
+        state,
+        config,
+      )
+      .then((resp) => {
+        console.log(resp);
+      });
+  };
 
   return (
     <MainTemplate>
       <TopBar>
-        <StyledButton red onClick={goBack}>Back</StyledButton>
-        <StyledButton bgRed onClick={() => console.log(state)}>Save</StyledButton>
+        <StyledButton red onClick={goBack}>
+          Back
+        </StyledButton>
+        <StyledButton bgRed onClick={handleSave}>
+          Save
+        </StyledButton>
       </TopBar>
       {state[activeWorkout].map((exercise, index) => (
-        <WorkoutButton key={JSON.stringify(`workout_${index}`)}
-                       exerciseNumber={index}
-                       workoutNumber={activeWorkout}
-                       showAction={() => handleShowSettings(index)}
-                       showSettings={showSettings === index}
-                       handleUpdateData={handleUpdateData}
-                       handleRemoveExercise={() => handleRemoveExercise(index)}
+        <WorkoutButton
+          key={JSON.stringify(`workout_${index}`)}
+          exerciseNumber={index}
+          workoutNumber={activeWorkout}
+          showAction={() => handleShowSettings(index)}
+          showSettings={showSettings === index}
+          handleUpdateData={handleUpdateData}
+          handleRemoveExercise={() => handleRemoveExercise(index)}
         />
-      ))
-      }
-      <div style={{ height: "20px" }}></div>
-      <StyledButton bgGreen full onClick={handleAddNew}>Add</StyledButton>
-
+      ))}
+      <div style={{ height: '20px' }}></div>
+      <StyledButton bgGreen full onClick={handleAddNew}>
+        Add
+      </StyledButton>
     </MainTemplate>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { state };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setData: (data) => dispatch({ type: "set_data", payload: data }),
+    setData: (data) => dispatch({ type: 'set_data', payload: data }),
+    addExercise: (activeWorkout) =>
+      dispatch({ type: 'add_exercise', payload: activeWorkout }),
   };
 };
 

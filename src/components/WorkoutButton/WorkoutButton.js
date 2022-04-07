@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import colors from "../../themes/colors";
 
 const StyledButton = styled.button`;
-  height: 100%;
+  height: 200px;
   width: 100%;
   background-color: ${colors.white};  
   border: 2px solid rgba(36,128,36,0.73);  
@@ -12,6 +12,7 @@ const StyledButton = styled.button`;
   border-radius:5px;
   color: ${colors.darkBlue};
   opacity: 0.4;
+  //margin-top: 10px;
   
   ${({ active }) => active && css`
       border: 2px solid ${colors.red};   
@@ -33,12 +34,12 @@ const StyledGridRow = styled.div`
   align-items: center;
   font-size: 20px;
 `;
-
+// TODO: rewrite this shit (use styled, change name)
 const WorkoutButton = ({ active, data, title, onClick }) => {
   if (data.length > 0) {
     return (
-      <div style={{ padding: "2px" }}>
-        <StyledButton onClick={() => onClick()} active={active}>
+      <div style={{ width: "100%", marginBottom: "5px" }}>
+        <StyledButton onClick={() => onClick()} active={true}>
           <StyledTemplate>
             <div style={{ color: "grey", marginTop: "15px", fontSize: "22px" }}>{title}</div>
             {

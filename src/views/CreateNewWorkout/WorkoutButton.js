@@ -109,33 +109,22 @@ const GenerateSelect = ({ defaultValue, onChange, name, qty }) => {
 };
 
 const WorkoutButton = ({
-  state,
+  data,
+  exerciseNumber,
   removeExercise,
   updateData,
-  workoutNumber,
-  exerciseNumber,
   showSettings,
-  showAction,
+  toggleSettings,
 }) => {
-  const workoutData = state[workoutNumber][exerciseNumber];
-  console.log(workoutData);
-
   const updateWorkoutData = (element) => {
-    let { name, value } = element.target;
-    let tmpData = workoutData;
-    tmpData[name] = value;
-    updateData(workoutNumber, exerciseNumber, tmpData);
-  };
-
-  const handleRemoveExercise = () => {
-    removeExercise(workoutNumber, exerciseNumber);
-    showAction();
+    const { name, value } = element.target;
+    updateData(exerciseNumber, name, value);
   };
 
   return (
     <div style={{ width: '100%' }}>
-      <ExerciseButton onClick={showAction}>
-        <div>{workoutData.exc}</div>
+      <ExerciseButton onClick={toggleSettings}>
+        <div>{data.exc}</div>
         <i className="fa fa-sliders" aria-hidden="true"></i>
       </ExerciseButton>
       {showSettings && (
@@ -144,7 +133,7 @@ const WorkoutButton = ({
             <SettingsRow>
               Workout name:{' '}
               <StyledInput
-                value={workoutData.exc}
+                value={data.exc}
                 name="exc"
                 onChange={updateWorkoutData}
               />
@@ -152,10 +141,10 @@ const WorkoutButton = ({
             <SettingsRow>
               Series:
               <GenerateSelect
-                defaultValue={workoutData.ser}
+                defaultValue={data.ser}
                 name="ser"
                 onChange={updateWorkoutData}
-                value={workoutData.ser}
+                value={data.ser}
                 qty={20}
               />
             </SettingsRow>
@@ -163,10 +152,10 @@ const WorkoutButton = ({
             <SettingsRow>
               Reps:
               <GenerateSelect
-                defaultValue={workoutData.reps}
+                defaultValue={data.reps}
                 name="reps"
                 onChange={updateWorkoutData}
-                value={workoutData.reps}
+                value={data.reps}
                 qty={20}
               />
             </SettingsRow>
@@ -174,13 +163,13 @@ const WorkoutButton = ({
               Weight (kg):
               <StyledInput
                 name="weight"
-                value={workoutData.weight}
+                value={data.weight}
                 onChange={updateWorkoutData}
               />
             </SettingsRow>
           </SettingsTop>
           <SettingsBottom>
-            <StyledButton red onClick={handleRemoveExercise}>
+            <StyledButton red>
               <i className="fa fa-trash" aria-hidden="true"></i>
             </StyledButton>
           </SettingsBottom>
@@ -190,31 +179,4 @@ const WorkoutButton = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    state,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateData: (workout_number, exercise_number, value) =>
-      dispatch({
-        type: 'update_data',
-        payload: {
-          workout_number: workout_number,
-          exercise_number: exercise_number,
-          value,
-        },
-      }),
-    removeExercise: (workout_number, exercise_number) =>
-      dispatch({
-        type: 'remove_exercise',
-        payload: {
-          workout_number: workout_number,
-          exercise_number: exercise_number,
-        },
-      }),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutButton);
+export default WorkoutButton;
