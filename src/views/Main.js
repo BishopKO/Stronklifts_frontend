@@ -7,6 +7,9 @@ import WorkoutPanel from '../components/WorkoutPanel/WorkoutPanel';
 import EditTraining from '../views/Edit';
 import StyledButton from '../components/Atoms/StyledButton';
 import TopBar from '../components/Atoms/TopBar';
+import { BrowserRouter, Routes, Route, S } from 'react-router-dom';
+
+// TODO: Add react router
 
 const MainTemplate = styled.div`
   display: flex;
@@ -44,6 +47,19 @@ const MainView = () => {
   const [activeWorkout, setActiveWorkout] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
+  // TODO: Write routes
+  // return (
+  //   <BrowserRouter>
+  //     <Routes>
+  //       <Route
+  //         path="/pindol/:id"
+  //         element={<StyledButton>button</StyledButton>}
+  //         props={'wajcha  '}
+  //       />
+  //     </Routes>
+  //   </BrowserRouter>
+  // );
+
   useEffect(() => {
     const access_token = localStorage.getItem('access');
     const headers = { Authorization: `Bearer ${access_token}` };
@@ -67,6 +83,7 @@ const MainView = () => {
     const config = { headers: { Authorization: `Bearer ${access_token}` } };
     let tmpData = trainingData;
     tmpData[activeTraining] = data;
+    setMenuVisible(false);
 
     axios
       .post(
@@ -123,11 +140,9 @@ const MainView = () => {
           </StyledButton>
           <StyledMenu isVisible={menuVisible}>
             <StyledButton clear full onClick={handleEditTraining}>
-              Create New
+              Create / Edit
             </StyledButton>
-            <StyledButton clear full onClick={handleEditTraining}>
-              Edit
-            </StyledButton>
+
             <StyledBreakLine />
             <StyledButton
               style={{ color: 'red' }}

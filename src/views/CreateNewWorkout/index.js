@@ -24,13 +24,13 @@ const CreateNewWorkout = ({ goBack }) => {
 
   const handleUpdateData = (exerciseNumber, name, value) => {
     let tmpData = workoutData[exerciseNumber];
-    console.log(exerciseNumber, workoutData[exerciseNumber]);
     tmpData[name] = value;
     setWorkoutData([...workoutData]);
   };
 
   const handleAddNewExercise = () => {
     setWorkoutData([...workoutData, { ...emptyExercise }]);
+    setShowSettings(workoutData.length);
   };
 
   window.data = function () {

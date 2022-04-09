@@ -92,6 +92,7 @@ const StyledButton = styled.button`
     `}
 `;
 
+// TODO: Color change when active
 const GenerateSelect = ({ defaultValue, onChange, name, qty }) => {
   return (
     <div>

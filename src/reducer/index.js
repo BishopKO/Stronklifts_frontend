@@ -3,7 +3,7 @@ const initState = [];
 const emptyExercise = { exc: '', ser: 0, reps: 0, weight: 0, unit: 'kg' };
 
 const reducer = (state = initState, action) => {
-  // console.log("Reducer:", state, action);
+  console.log('Reducer:', state, action);
   const { type, payload } = action;
 
   switch (type) {
@@ -26,6 +26,14 @@ const reducer = (state = initState, action) => {
     case 'add_exercise':
       state[payload].push(emptyExercise);
       return [...state];
+    case 'change_order':
+      const { workout_number, first_exercise, second_exercise } = payload;
+      const tmpData = state[workout_number][first_exercise];
+      state[workout_number][first_exercise] =
+        state[workout_number][second_exercise];
+      state[workout_number][second_exercise] = tmpData;
+      return [...state];
+
     default:
       return [...state];
   }

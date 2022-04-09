@@ -8,9 +8,6 @@ import SetReduxData from './SetReduxData';
 import styled from 'styled-components';
 import CreateNewWorkout from '../CreateNewWorkout';
 
-import { connect } from 'react-redux';
-import axios from 'axios';
-
 const StyledTemplate = styled.div`
   width: 100%;
   display: flex;

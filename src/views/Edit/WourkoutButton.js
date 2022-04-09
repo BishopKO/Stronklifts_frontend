@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 
@@ -28,6 +28,12 @@ const ExerciseButton = styled.button`
   i {
     color: rgba(255, 0, 0, 0.7);
   }
+
+  ${({ active }) =>
+    active &&
+    css`
+      opacity: 0.3;
+    `}
 `;
 
 const SettingsPanel = styled.div`
@@ -116,9 +122,29 @@ const WorkoutButton = ({
   exerciseNumber,
   showSettings,
   showAction,
+  changeOrderAction,
+  startChangeOrder,
+  active,
 }) => {
   const workoutData = state[workoutNumber][exerciseNumber];
-  console.log(workoutData);
+  let firstClickTimeout = null;
+
+  const handleSingleDoubleClick = () => {
+    if (startChangeOrder) {
+      changeOrderAction();
+    } else {
+      if (firstClickTimeout === null) {
+        firstClickTimeout = setTimeout(() => {
+          firstClickTimeout = null;
+          showAction();
+        }, 150);
+      } else {
+        clearTimeout(firstClickTimeout);
+        firstClickTimeout = null;
+        changeOrderAction();
+      }
+    }
+  };
 
   const updateWorkoutData = (element) => {
     let { name, value } = element.target;
@@ -134,7 +160,7 @@ const WorkoutButton = ({
 
   return (
     <div style={{ width: '100%' }}>
-      <ExerciseButton onClick={showAction}>
+      <ExerciseButton active={active} onClick={handleSingleDoubleClick}>
         <div>{workoutData.exc}</div>
         <i className="fa fa-sliders" aria-hidden="true"></i>
       </ExerciseButton>
